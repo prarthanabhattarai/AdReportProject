@@ -8,7 +8,7 @@ class Consumer(object):
 
     def __init__(self, addr, group, topic):
         self.client = KafkaClient(addr)
-        self.consumer = SimpleConsumer(self.client, group, topic, max_buffer_size=1310720000)
+        self.consumer = SimpleConsumer(self.client, group, topic, max_buffer_size=1310720000,auto_commit=False)
         self.temp_file_path = None
         self.temp_file = None
         self.hadoop_path = "/user/AdReport/%s/history" %(topic)
@@ -38,12 +38,15 @@ class Consumer(object):
                 #OffsetAndMessage(offset=43, message=Message(magic=0,
                 # attributes=0, key=None, value='some message'))
                 for message in messages:
-		    print (message)
+		    if len(message.message.value)>2:
+			print ("non empty message!")
+			print (len(message.message.value))	
+			print (message)
 		    #one_entry = True
                     #print (self.temp_file.tell())
-		    self.temp_file.write(message.message.value + "\n")		
+		   	self.temp_file.write(message.message.value + "\n")		
 
-                if self.temp_file.tell() > 2000000:
+                if self.temp_file.tell() > 20000000:
                     self.save_to_hdfs(output_dir)
 
                 self.consumer.commit()

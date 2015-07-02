@@ -56,9 +56,9 @@ class Consumer(object):
 	#self.consumer.commit()
 
     def save_to_hdfs(self, output_dir):
-	#print ("Saving file to hdfs")
+	print ("Saving file to hdfs")
         self.temp_file.close()
-	#print ("Closed open file")
+	print ("Closed open file")
         timestamp = time.strftime('%Y%m%d%H%M%S')
 
         hadoop_fullpath = "%s/%s_%s_%s.dat" % (self.hadoop_path, self.group,

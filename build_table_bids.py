@@ -50,3 +50,4 @@ print (bidRDD.count())
 
 for info in bid_infos:
 	bid_table.create(account_id=info[0], ad_group_id=info[1],bid_actions= info[2],bid_clicks=info[3],bid_impressions= info[4],bid_reach=info[5],bid_social=info[6], bid_type=info[7], target_max_age=info[8], target_min_age=info[9], target_gender=info[10],target_country=info[11])
+print ("finished creating table: bid_table")

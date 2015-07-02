@@ -12,40 +12,45 @@ class kafkaProducer(object):
         self.client = KafkaClient(addr)
         self.producer = SimpleProducer(self.client)
 
-        with open('AdReports/Facebook_Report/accessToken.txt', 'rb') as f:
+        with open('AdReports/FB_Report/accessToken.txt', 'rb') as f:
             self.access_token_list = pickle.load(f)
 
-        with open('AdReports/Facebook_Report/accountID.txt', 'rb') as d:
+        with open('AdReports/FB_Report/accountID.txt', 'rb') as d:
             self.account_id_list = pickle.load(d)
 
     def produceMsg(self):
-
-        for i in range (len(self.access_token_list)):
-        #for i in range (100) 
-	    print (i)
-	    a=apiReader(self.access_token_list[i],self.account_id_list[i])
+	
+	for i in range ((len(self.access_token_list)):
+	    #print (i)
+	    a=apiReader(self.access_token_list[b],self.account_id_list[b])
             bidding_list = a.get_bidding_info()
-            my_bid_list = json.dumps(bidding_list['data'])
+            my_bid_list = json.dumps(bidding_list)
 				
             if  len(bidding_list) > 1:
 		
 		my_active_ads=[]
-                for i in range(len(bidding_list['data'])):
-                    my_active_ads.append(bidding_list['data'][i]['id'])
+                for i in range(len(bidding_list)):
+                    my_active_ads.append(bidding_list[i]['id'])
                 
-		ads_info_list = a.get_ad_info(my_active_ads)
-		my_info_list= json.dumps(ads_info_list['data'])
-
            	try:
 			self.producer.send_messages("fb_bids", my_bid_list)
 
                 except (MessageSizeTooLargeError) as error:
 			print (error)
 
-		if len(my_info_list) > 1:
-			self.producer.send_messages("ads_info", my_info_list)
+		for ads in my_active_ads:
+			ads_info = a.get_ad_info(ads)
+               		my_ads_info= json.dumps(ads_info)
 
+			if len(my_ads_info)>1:
+				self.producer.send_messages("ads_info", my_ads_info)
+	 
+	time.sleep(SLEEP_TIMER)
 
 if __name__ == "__main__":
     statsProducer = kafkaProducer('52.8.165.110')
-    statsProducer.produceMsg()
+    
+    #once a day 
+    SLEEP_TIMER = 86400
+    while True:              
+    	statsProducer.produceMsg()

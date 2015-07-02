@@ -5,15 +5,10 @@ from facebookads import objects
 from facebookads.exceptions import FacebookRequestError
 import yaml
 
-#with open('names.txt') as f:
-#    content = f.readlines()
-
-#app_id = 'content[0]'
-#app_secret='content[1]'
  
 class apiReader():
 
-		def __init__(self, my_access_token, my_account_id, my_app_id = 'XXXXXXXX', my_app_secret='XXXXXXXXX'):
+		def __init__(self, my_access_token, my_account_id, my_app_id = 'XXXXXXX', my_app_secret='XXXXXXXXXX'):
 				self.my_app_id = my_app_id
 				self.my_app_secret = my_app_secret
 				self.my_access_token = my_access_token
@@ -31,54 +26,34 @@ class apiReader():
 				try:
 					response = self.api.call('GET',path, params = params)
 					stats = response.json()
-				        my_bidding_list=json.loads(json.dumps(stats))
+				        my_bidding_list=json.loads(json.dumps(stats['data']))
 					
 					#pprint.pprint (my_bidding_list)
 
 					return my_bidding_list
 
-					#if (len (my_bidding_list))>0:
-					#	for i in range(len(my_bidding_list)):
-					#		self.active_campaings.append(my_bidding_list['data'][i]['id'])
-					#		print (self.active_campaings)
-
-					#	with open('bidding_data.json', 'a') as outfile:
-					# 		json.dump(my_bidding_list, outfile)
-
 				except (FacebookRequestError,AttributeError) as error:
 					list=[]
-					#print (error)
+					print (error)
 					return list
-				
-					#print (error.api_error_code())
 
-		def get_ad_info(self, adsets):
+		def get_ad_info(self, adset):
 
 				#set params for getting info about ad sets
+				#for daily update, set date_preset to last day
 				params = {  'date_preset' :'last_28_days',	
 						'time_increment' : '1'					
-				}
-
-				for adset in adsets:
-					#print (adsets)
-					path = 'https://graph.facebook.com/v2.3/%s/insights?limit=500' % (adset)
-					response = self.api.call('GET', path, params = params)
+				}	
+				path = 'https://graph.facebook.com/v2.3/%s/insights?limit=500' % (adset)
+				response = self.api.call('GET', path, params = params)
 					
-					stats = response.json()
-					my_ads_list = json.loads(json.dumps(stats))
-					pprint.pprint (my_ads_list)
-					#print(len(my_ads_list))
+				stats = response.json()	
+				my_ads_list = json.loads(json.dumps(stats['data']))
+				
+				#print (adset)
+				#pprint.pprint (my_ads_list)
 
-					#with open('ads_data.json', 'a') as outfile:
-					#	json.dump(my_ads_list, outfile)
-					return my_ads_list
-#if __name__ == '__main__':
+				return my_ads_list
 
-	#in final version, read the values from txt file
-	#a.get_bidding_info()
-	#a.get_ad_info()
-
-#pprint.pprint (a.get_stats())
-#print (len(a.get_stats()))
 
 

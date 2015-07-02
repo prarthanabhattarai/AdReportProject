@@ -2,10 +2,10 @@ from getvalues import valuesReader
 from getdata import apiReader
 import pickle
 
-with open('AdReports/Facebook_Report/accessToken.txt', 'rb') as f:
+with open('AdReports/FB_Report/accessToken.txt', 'rb') as f:
 	access_token_list = pickle.load(f)
 
-with open('AdReports/Facebook_Report/accountID.txt', 'rb') as d:
+with open('AdReports/FB_Report/accountID.txt', 'rb') as d:
 	account_id_list = pickle.load(d)
 
 for i in range (len(access_token_list)):
