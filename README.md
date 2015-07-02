@@ -25,6 +25,7 @@ For example, in the following graph, you can see number of clicks and cost per u
 ![GitHub Logo](/Images/ss2.png)
 
 ## Data Pipeline:
+
+Data is obatained from Facebook's Marketing API. A Kafka Producer runs the script to make API calls and conmsuer sends the data received as messages to HDFS for file storage. Batch Processing is done using Spark SQL. The processed data is sent to Cassandra and the front end uses Flask.
+
 ![GitHub Logo](/Images/ss4.png)
-
-
