@@ -11,8 +11,12 @@ AdReport is a tool to analyse the performance of ads on Facebook. It can also be
 * Apache Cassandra
 * Flask with Highcharts and Bootstrap 
 
-## Platform: 
+## Platform:
+### Analytics:
+The Analytics page gives some examples of analysis that can be done with the data. The pie chart shows composition of different bid_types. The bar chart shows a comparision for average cost per result and average cost per total action across different bid types.
 ![GitHub Logo](/Images/ss1.png)
 
+### Queries:
+![GitHub Logo](/Images/ss2.png)
 
 
