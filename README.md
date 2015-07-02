@@ -12,7 +12,7 @@ AdReport is a tool to analyse the performance of ads on Facebook. It can also be
 * Flask with Highcharts and Bootstrap 
 
 ## Platform
-![alt text][logo]
-[logo]: https://github.com/prarthanabhattarai/AdReportProject/Images/ss1.png "Logo Title Text 2"
+![GitHub Logo](/Images/ss1.png)
+Format: ![Alt Text](url)
 
 
