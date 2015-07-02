@@ -17,6 +17,11 @@ The Analytics page gives some examples of analysis that can be done with the dat
 ![GitHub Logo](/Images/ss1.png)
 
 ### Queries:
+The Queries Tab allows retreiving of information about an ad account or an ad set. When account id is provided on the first field, it shows up a table showing all the active adsets under that account. When ad set id is provided on the second field, it shows up graphs on performance metrics pertaining to that particular adset.
+![GitHub Logo](/Images/ss3.png)
 ![GitHub Logo](/Images/ss2.png)
+
+## Data Pipeline:
+![GitHub Logo](/Images/ss4.png)
 
 
