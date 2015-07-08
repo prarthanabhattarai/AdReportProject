@@ -10,12 +10,12 @@ import pandas as pd
 
 class ads_table(Model):
 
-        ad_id = columns.BigInt(primary_key = True)
-        actions_per_impression = columns.Float()
-        clicks = columns.Float()
-        cost_per_unique_click = columns.Float()
-        date_start = columns.Text(primary_key = True)
-        date_end = columns.Text()
+         ad_id = columns.BigInt(primary_key = True)
+         actions_per_impression = columns.Float()
+         clicks = columns.Float()
+         cost_per_unique_click = columns.Float()
+         date_start = columns.Text(primary_key = True)
+         date_end = columns.Text()
 #        target_max_age = columns.Integer()
 #        target_min_age = columns.Integer()
 #        target_gender = columns.Integer()
@@ -42,12 +42,10 @@ ad_camps.registerTempTable("ad_camps")
 ads_infos = sqlContext.sql("SELECT campaign_id,actions_per_impression,clicks,cost_per_unique_click,date_start,date_stop FROM ad_camps").collect()
 
 #Results of SQL queries are RDDs, RDD methods can be applied to them
-adRDD = sc.parallelize(ads_infos)
-adRDD2 = adRDD.distinct().collect() 
-
-ads_df=pd.DataFrame(adRDD2)
-print (ads_df.head(10))
+print ("length is:   ")
+print (len(ads_infos))
 
 #Send table to Cassandra
-#for info in ads_infos:
-#	ads_table.create(ad_id=info[0],actions_per_impression = info[1],clicks= info[2], cost_per_unique_click=info[3], date_start=info[4], date_end=info[5])	
+for info in ads_infos:
+	ads_table.update(ad_id=info[0],actions_per_impression = info[1],clicks= info[2], cost_per_unique_click=info[3], date_start=info[4], date_end=info[5])	
+print ("update complete")

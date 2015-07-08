@@ -39,17 +39,16 @@ ad_camp_stats.registerTempTable("ad_camp_stats")
 # SQL statements can be run by using the sql methods provided by sqlContext.
 #info1 = sqlContext.sql("SELECT account_id, bid_type, targeting.age_max, targeting.age_min  FROM ad_camp_bid").collect()
 #info2 = sqlContext.sql("SELECT campaign_id,actions_per_impression,clicks,cost_per_unique_click,date_start,date_stop FROM ad_camp_stats").collect()
-info3 = sqlContext.sql("SELECT ad_camp_bid.account_id, ad_camp_bid.id, ad_camp_bid.bid_type, ad_camp_stats.clicks, ad_camp_stats.cost_per_unique_click,ad_camp_stats.cost_per_result,ad_camp_stats.cost_per_total_action,ad_camp_stats.result_rate,ad_camp_stats.date_start FROM ad_camp_bid INNER JOIN ad_camp_stats ON ad_camp_bid.id = ad_camp_stats.campaign_id").collect()
+info3 = sqlContext.sql("SELECT ad_camp_bid.account_id, ad_camp_bid.id, ad_camp_bid.bid_type, ad_camp_stats.clicks, ad_camp_stats.cost_per_unique_click,ad_camp_stats.cost_per_result,ad_camp_stats.cost_per_total_action,ad_camp_stats.result_rate,ad_camp_stats.date_start FROM ad_camp_bid INNER JOIN ad_camp_stats ON ad_camp_bid.id = ad_camp_stats.campaign_id and ad_camp_bid.bid_type IS NOT NULL").collect()
 #info4 = sqlContext.sql("SELECT bid_type, COUNT(bid_type) FROM ad_camp_bid GROUP BY bid_type").collect()
-
 
 del info3[-1]
 infoRDD = sqlContext.inferSchema(info3)
 infoRDD.registerTempTable("my_table")
 q = sqlContext.sql("SELECT bid_type, AVG(cost_per_result) AS avg_cost_per_result, AVG(cost_per_total_action) AS avg_cost_per_action FROM my_table GROUP BY bid_type").collect() 
 
-infodf= pd.DataFrame(q)
-print (infodf.head(10))
-#for info in q:
-#        cost_table.create(bid_type=info[0], cost_per_result=info[1], cost_per_action=info[2])
-#print ("finished creating table: cost table")
+#infodf= pd.DataFrame(q)
+#print (infodf.head(10))
+for info in q:
+        cost_table.create(bid_type=info[0], cost_per_result=info[1], cost_per_action=info[2])
+print ("finished creating table: cost table")
