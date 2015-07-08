@@ -19,9 +19,13 @@ The Analytics page gives some examples of analysis that can be done with the dat
 ### Queries:
 The Queries Tab allows retreiving of information about an ad account or an ad set. When account id is provided on the first field, it shows up a table showing all the active adsets under that account. When ad set id is provided on the second field, it shows up graphs on performance metrics pertaining to that particular adset.
 ![GitHub Logo](/Images/ss3.png)
+
+For example, in the following graph, you can see number of clicks and cost per unique click for the ad set queried. 
+
 ![GitHub Logo](/Images/ss2.png)
 
 ## Data Pipeline:
+
+Data is obatained from Facebook's Marketing API. A Kafka Producer runs the script to make API calls and conmsuer sends the data received as messages to HDFS for file storage. Batch Processing is done using Spark SQL. The processed data is sent to Cassandra and the front end uses Flask.
+
 ![GitHub Logo](/Images/ss4.png)
-
-
