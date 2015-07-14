@@ -29,3 +29,11 @@ For example, in the following graph, you can see number of clicks and cost per u
 Data is obatained from Facebook's Marketing API. A Kafka Producer runs the script to make API calls and conmsuer sends the data received as messages to HDFS for file storage. Batch Processing is done using Spark SQL. The processed data is sent to Cassandra and the front end uses Flask.
 
 ![GitHub Logo](/Images/ss4.png)
+
+## Ingestion:
+
+Ingestion is done using Kafka. A Kafka producer runs a script to make API calls to Facebook's Marketing API. The results are written to two different topics, one for bidding data and another for ads performance data. Then, two consumer threads (Kafka consumer) consume the message and send it to HDFS for storage.
+
+## Batch Processing:
+
+Batch processing is done using Spark SQL. I use a python connector for Spark called pySpark. 
